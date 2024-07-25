@@ -1,0 +1,115 @@
+$color-navbar-background: #FDFCF5;
+$color-navbar-button-text: #515963;
+$color-navbar-active-button-text: #ffffff;
+$font-size-navbar-button-text: 3vw;
+$color-gold: #FFC33B;
+$ease-bezier: cubic-bezier(0.35, 1.75, 0.75, 1);
+$button-bottom-bar-height: 4px;
+$green-button-bottom-bar-color: #32A820;
+$blue-button-bottom-bar-color: #1599f3;
+$gum-pink-button-bottom-bar-color: #ff749d;
+
+@function vh($vh) {
+  @return calc(#{$vh} * var(--tg-viewport-height));
+}
+
+@mixin main-font {
+  font-family: "Luckiest Guy", cursive;
+  font-style: normal;
+}
+
+@mixin sub-font {
+  font-family: Almarai, sans-serif;
+  font-style: normal;
+}
+
+@mixin main-text-shadow {
+  text-shadow: 0 0.5px 0 black, -0.5px 0 0 black, 0.5px 0 0 black, 0 -0.5px 0 black;
+  -webkit-text-stroke-width: thin;
+  -webkit-text-stroke-color: black;
+  filter: drop-shadow(0px 1.5px 0.5px black);
+}
+
+@mixin animate($duration: 0.5s) {
+  transition: all $duration ease-in-out;
+}
+
+@mixin animate-bezier($duration: 0.1s) {
+  transition: all $duration $ease-bezier;
+}
+
+@mixin animate-fade-in($duration: 0.1s) {
+  animation: fade-in $duration $ease-bezier;
+}
+
+@mixin animate-fade-out($duration: 0.1s) {
+  animation: fade-out $duration $ease-bezier;
+}
+
+@mixin rounded-cloud {
+  background-color: #FFFEFF;
+  box-shadow: 0 4px 0 #D1D8FF, 0 8px 0 #00000040;
+  position: relative;
+}
+
+@mixin white-bottom-shadow {
+  box-shadow: 0 4px 0 #D1D8FF, 0 8px 0 rgba(0, 0, 0, 0.2509803922), 0px -5px 20px rgba(0, 0, 0, 0.2);
+}
+
+@mixin main-button {
+  @include animate-bezier();
+  cursor: pointer;
+  transform-origin: bottom;
+  user-select: none;
+  box-shadow: 0 4px 0 #00000020;
+
+  &.disabled,
+  &[disabled] {
+    pointer-events: none;
+    filter: contrast(0.5) opacity(0.5) saturate(0.5);
+  }
+
+  &:active {
+    transform: scale(1.1, 0.9);
+    transition-delay: 0s !important;
+  }
+}
+
+@mixin text-outline-red {
+  color: #f13735;
+  text-shadow: 0 2px 0 #7B172A;
+  -webkit-text-stroke-width: thin;
+  -webkit-text-stroke-color: #7A1327;
+  filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0)) drop-shadow(0 0 0 rgba(255, 72, 72, 0));
+}
+
+@mixin text-outline-blue {
+  color: #6BFFF8;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25), 0 2px 0 #008DBF;
+  -webkit-text-stroke-width: thin;
+  -webkit-text-stroke-color: #008ABA;
+  filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0)) drop-shadow(0 0 0 rgba(255, 72, 72, 0));
+}
+
+@mixin text-outline-gold {
+  color: #FDD800;
+  text-align: center;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25), 0 2px 0 #8C430F;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: #8C430F;
+}
+
+@mixin text-white-outline-brown {
+  color: #FFFFFF;
+  text-align: center;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: #8E4D25;
+}
+
+@mixin absolute-stretch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}

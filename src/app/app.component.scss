@@ -4,13 +4,16 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-size: cover;
+  background-size: 100%, cover;
   background-repeat: no-repeat;
-  background-position: 0;
-  background-image: url(../assets/drop-bg.png);
+  background-position: center, 0;
+  background-image: url(../assets/stars.png), url(../assets/drop-bg.png);
+
 
   .drop-bank {
-    margin-top: -5vh;
+    position: relative;
+    z-index: 1;
+    margin-top: 5vh;
     height: 42vh;
     background-size: auto 35vh;
     background-repeat: no-repeat;
@@ -18,16 +21,24 @@
     background-image: url(../assets/drop-bank-bg.png);
 
     .balance {
-      margin-left: -8vw;
-      margin-top: 5vh;
+      margin-left: -5vw;
+      margin-top: 3.5vh;
+
       .main-label {
         @include text-white-outline-brown();
         font-size: 3.5vh;
+        font-feature-settings: "tnum";
+        font-variant-numeric: tabular-nums;
+        width: 235px;
+
+        &_big-number {
+          font-size: 3vh;
+        }
       }
 
       img {
         height: 5vh;
-        margin: 0 2vw 0.5vh 0;
+        margin: 0 0.5vw 0.5vh 0;
       }
     }
 
@@ -51,7 +62,7 @@
     }
 
     .instructions-list {
-      margin-left: -12vw;
+      padding-inline-start: 0;
 
       .main-label {
         color: #865858;
@@ -65,12 +76,12 @@
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 57vh;
-    padding-bottom: 2vh;
+    height: 71vh;
+    padding-top: clamp(0px, 82vw, 360px);
     background-size: 100%;
     background-repeat: no-repeat;
-    background-position: 0;
-    background-image: url(../assets/drop-moon-bottom.png);
+    background-position: center bottom calc(220px - 55vw);
+    background-image: url('../assets/drop-moon-bottom.png');
   }
 
   .main-label.boinkers-label {
@@ -85,6 +96,7 @@
     width: 68vw;
 
     .button-icon {
+      position: relative;
       width: 5vh;
       margin-right: 2vw;
     }
@@ -115,5 +127,3 @@
     }
   }
 }
-
-

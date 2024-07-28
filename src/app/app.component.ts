@@ -25,10 +25,10 @@ export class AppComponent {
 
   private readonly injector = inject(Injector);
 
-  protected readonly completedBoinkers = signal(13);
   private readonly updatePoopIntervalMs = signal(50);
-  private readonly initialPoopCount = signal(1);
-  protected readonly poopPerHour = signal(120000.2518);
+  private readonly initialPoopCount = signal(32450000.4567);
+  protected readonly poopPerHour = signal(12.2518);
+  protected readonly completedBoinkers = signal(13);
 
   private readonly poopPerMs = computed(
     () => this.poopPerHour() / this.millisecondsInHour,
@@ -50,4 +50,8 @@ export class AppComponent {
   );
 
   protected readonly currentPoopCount = toSignal(this.currentPoopCount$);
+
+  protected readonly isBigNumber = computed(
+    () => Number(this.currentPoopCount()) >= 1_000_000,
+  );
 }

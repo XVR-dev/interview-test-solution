@@ -2,9 +2,11 @@
   <div class="drop-bank flex-column justify-center">
     <div class="balance flex-row align-center justify-center">
       <img src="../assets/poop.png" alt="shit coin icon" />
-      <span class="main-label shadow">{{
-        currentPoopCount() | number: numberPipeFormat
-      }}</span>
+      <span
+        class="main-label shadow"
+        [class.main-label_big-number]="isBigNumber()"
+        >{{ currentPoopCount() | number: numberPipeFormat }}</span
+      >
     </div>
     <div class="flex-row justify-center">
       <div class="profit-per-hour flex-row align-center justify-center">

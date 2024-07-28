@@ -2,7 +2,12 @@
 @import 'fonts';
 @import 'mixins';
 
-html, body.mat-typography {
+* {
+  box-sizing: border-box;
+}
+
+
+html, body {
   margin: 0;
   height: 100%;
   width: 100%;
@@ -17,7 +22,7 @@ html, body.mat-typography {
   z-index: 0;
 }
 
-body.mat-typography {
+body {
   .app-container {
     background-image: url(/assets/img/stars.png);
     background-size: 100% 100%;

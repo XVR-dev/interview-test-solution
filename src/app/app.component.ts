@@ -1,32 +1,53 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import {interval, Subscription} from "rxjs";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  Injector,
+  signal,
+} from "@angular/core";
+import { RouterOutlet } from "@angular/router";
+import { map, scan, switchMap, timer } from "rxjs";
+import { toObservable, toSignal } from "@angular/core/rxjs-interop";
+import { DecimalPipe } from "@angular/common";
 
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
   standalone: true,
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  imports: [RouterOutlet, DecimalPipe],
+  templateUrl: "./app.component.html",
+  styleUrl: "./app.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements OnInit, OnDestroy {
-  lastCalculatedPoop = 123.4567;
-  poopPerHour = 0;
-  completedBoinkers = 0;
-  updatePoopInterval?: Subscription;
+export class AppComponent {
+  private readonly millisecondsInHour = 1000 * 60 * 60;
+  protected readonly numberPipeFormat = "1.4-4";
 
-  constructor(
-  ) { }
+  private readonly injector = inject(Injector);
 
-  ngOnInit(): void {
-    this.completedBoinkers = 13;
-    this.updatePoopValue();
-    this.updatePoopInterval = interval(50).subscribe(this.updatePoopValue.bind(this));
-  }
+  protected readonly completedBoinkers = signal(13);
+  private readonly updatePoopIntervalMs = signal(50);
+  private readonly initialPoopCount = signal(1);
+  protected readonly poopPerHour = signal(120000.2518);
 
-  updatePoopValue() {
-    this.lastCalculatedPoop += 0.05;
-    this.poopPerHour = 3.324
-  }
+  private readonly poopPerMs = computed(
+    () => this.poopPerHour() / this.millisecondsInHour,
+  );
+  private readonly poopPerInterval = computed(
+    () => this.poopPerMs() * this.updatePoopIntervalMs(),
+  );
 
+  private readonly currentPoopCount$ = toObservable(this.initialPoopCount).pipe(
+    switchMap((initialPoopCount) =>
+      toObservable(this.updatePoopIntervalMs, {
+        injector: this.injector,
+      }).pipe(
+        switchMap((intervalMs) => timer(0, intervalMs)),
+        scan((acc) => acc + this.poopPerInterval(), initialPoopCount),
+        map((currentValue) => currentValue.toFixed(4)),
+      ),
+    ),
+  );
+
+  protected readonly currentPoopCount = toSignal(this.currentPoopCount$);
 }
